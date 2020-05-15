@@ -240,6 +240,10 @@ def parse_computer(tx, computer):
         count += 1
         if count % SYNC_COUNT == 0:
             tx.sync()
+    
+    #Sessions
+    for session in computer['Sessions']:
+        parse_session(tx, session)
 
     # Localadmins, rdpers, dcom
     query = "UNWIND {{props}} AS prop MERGE (n:Computer {{objectid: prop.objectid}}) MERGE (m:{} {{objectid:prop.target}}) MERGE (m)-[r:{} {{isacl: false}}]->(n)"
